@@ -33,8 +33,12 @@ public class Entry implements Serializable {
     private Worksheet worksheet;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "entries" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "entries", "customer" }, allowSetters = true)
     private Project project;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "entries" }, allowSetters = true)
+    private EntryType entryType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -100,6 +104,19 @@ public class Entry implements Serializable {
 
     public Entry project(Project project) {
         this.setProject(project);
+        return this;
+    }
+
+    public EntryType getEntryType() {
+        return this.entryType;
+    }
+
+    public void setEntryType(EntryType entryType) {
+        this.entryType = entryType;
+    }
+
+    public Entry entryType(EntryType entryType) {
+        this.setEntryType(entryType);
         return this;
     }
 

@@ -8,6 +8,8 @@ import { IWorksheet } from 'app/shared/model/worksheet.model';
 import { getEntities as getWorksheets } from 'app/entities/worksheet/worksheet.reducer';
 import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
+import { IEntryType } from 'app/shared/model/entry-type.model';
+import { getEntities as getEntryTypes } from 'app/entities/entry-type/entry-type.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './entry.reducer';
 import { IEntry } from 'app/shared/model/entry.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,6 +23,7 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const worksheets = useAppSelector(state => state.worksheet.entities);
   const projects = useAppSelector(state => state.project.entities);
+  const entryTypes = useAppSelector(state => state.entryType.entities);
   const entryEntity = useAppSelector(state => state.entry.entity);
   const loading = useAppSelector(state => state.entry.loading);
   const updating = useAppSelector(state => state.entry.updating);
@@ -38,6 +41,7 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
     dispatch(getWorksheets({}));
     dispatch(getProjects({}));
+    dispatch(getEntryTypes({}));
   }, []);
 
   useEffect(() => {
@@ -54,6 +58,7 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ...values,
       worksheet: worksheets.find(it => it.id.toString() === values.worksheet.toString()),
       project: projects.find(it => it.id.toString() === values.project.toString()),
+      entryType: entryTypes.find(it => it.id.toString() === values.entryType.toString()),
     };
 
     if (isNew) {
@@ -73,6 +78,7 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
           date: convertDateTimeFromServer(entryEntity.date),
           worksheet: entryEntity?.worksheet?.id,
           project: entryEntity?.project?.id,
+          entryType: entryEntity?.entryType?.id,
         };
 
   return (
@@ -127,6 +133,16 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {projects
                   ? projects.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="entry-entryType" name="entryType" data-cy="entryType" label="Entry Type" type="select">
+                <option value="" key="0" />
+                {entryTypes
+                  ? entryTypes.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.name}
                       </option>

@@ -49,6 +49,7 @@ export const Entry = (props: RouteComponentProps<{ url: string }>) => {
                 <th>Date</th>
                 <th>Worksheet</th>
                 <th>Project</th>
+                <th>Entry Type</th>
                 <th />
               </tr>
             </thead>
@@ -64,6 +65,7 @@ export const Entry = (props: RouteComponentProps<{ url: string }>) => {
                   <td>{entry.date ? <TextFormat type="date" value={entry.date} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{entry.worksheet ? <Link to={`worksheet/${entry.worksheet.id}`}>{entry.worksheet.id}</Link> : ''}</td>
                   <td>{entry.project ? <Link to={`project/${entry.project.id}`}>{entry.project.name}</Link> : ''}</td>
+                  <td>{entry.entryType ? <Link to={`entry-type/${entry.entryType.id}`}>{entry.entryType.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${entry.id}`} color="info" size="sm" data-cy="entityDetailsButton">

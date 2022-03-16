@@ -26,8 +26,12 @@ public class Project implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "project")
-    @JsonIgnoreProperties(value = { "worksheet", "project" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType" }, allowSetters = true)
     private Set<Entry> entries = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "projects" }, allowSetters = true)
+    private Customer customer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -85,6 +89,19 @@ public class Project implements Serializable {
     public Project removeEntry(Entry entry) {
         this.entries.remove(entry);
         entry.setProject(null);
+        return this;
+    }
+
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Project customer(Customer customer) {
+        this.setCustomer(customer);
         return this;
     }
 

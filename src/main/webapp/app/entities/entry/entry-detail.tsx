@@ -37,6 +37,8 @@ export const EntryDetail = (props: RouteComponentProps<{ id: string }>) => {
           <dd>{entryEntity.worksheet ? entryEntity.worksheet.id : ''}</dd>
           <dt>Project</dt>
           <dd>{entryEntity.project ? entryEntity.project.name : ''}</dd>
+          <dt>Entry Type</dt>
+          <dd>{entryEntity.entryType ? entryEntity.entryType.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/entry" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

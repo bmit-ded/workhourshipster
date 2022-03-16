@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,14 +61,22 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectDTO> findAll() {
         log.debug("Request to get all Projects");
-        return projectRepository.findAll().stream().map(projectMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return projectRepository
+            .findAllWithEagerRelationships()
+            .stream()
+            .map(projectMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public Page<ProjectDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return projectRepository.findAllWithEagerRelationships(pageable).map(projectMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<ProjectDTO> findOne(Long id) {
         log.debug("Request to get Project : {}", id);
-        return projectRepository.findById(id).map(projectMapper::toDto);
+        return projectRepository.findOneWithEagerRelationships(id).map(projectMapper::toDto);
     }
 
     @Override

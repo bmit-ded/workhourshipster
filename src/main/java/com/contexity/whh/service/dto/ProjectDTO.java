@@ -14,6 +14,8 @@ public class ProjectDTO implements Serializable {
     @NotNull
     private String name;
 
+    private CustomerDTO customer;
+
     public Long getId() {
         return id;
     }
@@ -28,6 +30,14 @@ public class ProjectDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CustomerDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -57,6 +67,7 @@ public class ProjectDTO implements Serializable {
         return "ProjectDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", customer=" + getCustomer() +
             "}";
     }
 }

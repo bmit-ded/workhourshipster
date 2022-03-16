@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20220316142437",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "entry_type",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "worktime",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "EntryType",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "entry",
+      "otherEntityRelationshipName": "entryType",
+      "relationshipName": "entry",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

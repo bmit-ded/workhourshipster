@@ -22,6 +22,8 @@ public class EntryDTO implements Serializable {
 
     private ProjectDTO project;
 
+    private EntryTypeDTO entryType;
+
     public Long getId() {
         return id;
     }
@@ -62,6 +64,14 @@ public class EntryDTO implements Serializable {
         this.project = project;
     }
 
+    public EntryTypeDTO getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(EntryTypeDTO entryType) {
+        this.entryType = entryType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,6 +102,7 @@ public class EntryDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", worksheet=" + getWorksheet() +
             ", project=" + getProject() +
+            ", entryType=" + getEntryType() +
             "}";
     }
 }

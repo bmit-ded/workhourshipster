@@ -46,6 +46,7 @@ export const Project = (props: RouteComponentProps<{ url: string }>) => {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Customer</th>
                 <th />
               </tr>
             </thead>
@@ -58,6 +59,7 @@ export const Project = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{project.name}</td>
+                  <td>{project.customer ? <Link to={`customer/${project.customer.id}`}>{project.customer.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${project.id}`} color="info" size="sm" data-cy="entityDetailsButton">

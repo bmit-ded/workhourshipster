@@ -16,6 +16,10 @@ import worksheet from 'app/entities/worksheet/worksheet.reducer';
 import entry from 'app/entities/entry/entry.reducer';
 // prettier-ignore
 import project from 'app/entities/project/project.reducer';
+// prettier-ignore
+import entryType from 'app/entities/entry-type/entry-type.reducer';
+// prettier-ignore
+import customer from 'app/entities/customer/customer.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const rootReducer = {
@@ -31,6 +35,8 @@ const rootReducer = {
   worksheet,
   entry,
   project,
+  entryType,
+  customer,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 };

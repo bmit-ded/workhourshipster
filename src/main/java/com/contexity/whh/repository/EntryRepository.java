@@ -27,14 +27,14 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
     }
 
     @Query(
-        value = "select distinct entry from Entry entry left join fetch entry.project",
+        value = "select distinct entry from Entry entry left join fetch entry.project left join fetch entry.entryType",
         countQuery = "select count(distinct entry) from Entry entry"
     )
     Page<Entry> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct entry from Entry entry left join fetch entry.project")
+    @Query("select distinct entry from Entry entry left join fetch entry.project left join fetch entry.entryType")
     List<Entry> findAllWithToOneRelationships();
 
-    @Query("select entry from Entry entry left join fetch entry.project where entry.id =:id")
+    @Query("select entry from Entry entry left join fetch entry.project left join fetch entry.entryType where entry.id =:id")
     Optional<Entry> findOneWithToOneRelationships(@Param("id") Long id);
 }

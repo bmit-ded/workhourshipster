@@ -4,6 +4,8 @@ import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { ICustomer } from 'app/shared/model/customer.model';
+import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './project.reducer';
 import { IProject } from 'app/shared/model/project.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,6 +17,7 @@ export const ProjectUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
+  const customers = useAppSelector(state => state.customer.entities);
   const projectEntity = useAppSelector(state => state.project.entity);
   const loading = useAppSelector(state => state.project.loading);
   const updating = useAppSelector(state => state.project.updating);
@@ -29,6 +32,8 @@ export const ProjectUpdate = (props: RouteComponentProps<{ id: string }>) => {
     } else {
       dispatch(getEntity(props.match.params.id));
     }
+
+    dispatch(getCustomers({}));
   }, []);
 
   useEffect(() => {
@@ -41,6 +46,7 @@ export const ProjectUpdate = (props: RouteComponentProps<{ id: string }>) => {
     const entity = {
       ...projectEntity,
       ...values,
+      customer: customers.find(it => it.id.toString() === values.customer.toString()),
     };
 
     if (isNew) {
@@ -55,6 +61,7 @@ export const ProjectUpdate = (props: RouteComponentProps<{ id: string }>) => {
       ? {}
       : {
           ...projectEntity,
+          customer: projectEntity?.customer?.id,
         };
 
   return (
@@ -83,6 +90,16 @@ export const ProjectUpdate = (props: RouteComponentProps<{ id: string }>) => {
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField id="project-customer" name="customer" data-cy="customer" label="Customer" type="select">
+                <option value="" key="0" />
+                {customers
+                  ? customers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/project" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

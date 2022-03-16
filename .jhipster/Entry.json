@@ -34,6 +34,13 @@
       "otherEntityRelationshipName": "entry",
       "relationshipName": "project",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "entryType",
+      "otherEntityRelationshipName": "entry",
+      "relationshipName": "entryType",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"
