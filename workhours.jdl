@@ -1,0 +1,25 @@
+entity Worksheet {
+
+}
+
+entity Entry {
+	hours Double required,
+    date Instant required
+}
+
+entity Project {
+	name String required
+}
+
+relationship OneToOne {
+	 Worksheet{user(login)} to User
+}
+
+relationship OneToMany {
+	Worksheet to Entry{worksheet},
+    Project to Entry{project(name)}
+}
+
+dto * with mapstruct
+service all with serviceImpl
+
