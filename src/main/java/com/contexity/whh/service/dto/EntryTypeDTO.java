@@ -17,6 +17,8 @@ public class EntryTypeDTO implements Serializable {
     @NotNull
     private Boolean worktime;
 
+    private Boolean billable;
+
     public Long getId() {
         return id;
     }
@@ -39,6 +41,14 @@ public class EntryTypeDTO implements Serializable {
 
     public void setWorktime(Boolean worktime) {
         this.worktime = worktime;
+    }
+
+    public Boolean getBillable() {
+        return billable;
+    }
+
+    public void setBillable(Boolean billable) {
+        this.billable = billable;
     }
 
     @Override
@@ -69,6 +79,7 @@ public class EntryTypeDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", worktime='" + getWorktime() + "'" +
+            ", billable='" + getBillable() + "'" +
             "}";
     }
 }

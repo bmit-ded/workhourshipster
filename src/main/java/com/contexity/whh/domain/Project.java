@@ -26,7 +26,7 @@ public class Project implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "project")
-    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType", "worklocation", "tags" }, allowSetters = true)
     private Set<Entry> entries = new HashSet<>();
 
     @ManyToOne

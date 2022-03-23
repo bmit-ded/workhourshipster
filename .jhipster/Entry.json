@@ -12,8 +12,12 @@
     },
     {
       "fieldName": "date",
-      "fieldType": "Instant",
+      "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "comment",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -41,6 +45,21 @@
       "otherEntityRelationshipName": "entry",
       "relationshipName": "entryType",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "worklocation",
+      "otherEntityRelationshipName": "entry",
+      "relationshipName": "worklocation",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "tags",
+      "otherEntityRelationshipName": "entry",
+      "ownerSide": false,
+      "relationshipName": "tags",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

@@ -1,7 +1,7 @@
 package com.contexity.whh.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -16,13 +16,17 @@ public class EntryDTO implements Serializable {
     private Double hours;
 
     @NotNull
-    private Instant date;
+    private LocalDate date;
+
+    private String comment;
 
     private WorksheetDTO worksheet;
 
     private ProjectDTO project;
 
     private EntryTypeDTO entryType;
+
+    private WorklocationDTO worklocation;
 
     public Long getId() {
         return id;
@@ -40,12 +44,20 @@ public class EntryDTO implements Serializable {
         this.hours = hours;
     }
 
-    public Instant getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public WorksheetDTO getWorksheet() {
@@ -70,6 +82,14 @@ public class EntryDTO implements Serializable {
 
     public void setEntryType(EntryTypeDTO entryType) {
         this.entryType = entryType;
+    }
+
+    public WorklocationDTO getWorklocation() {
+        return worklocation;
+    }
+
+    public void setWorklocation(WorklocationDTO worklocation) {
+        this.worklocation = worklocation;
     }
 
     @Override
@@ -100,9 +120,11 @@ public class EntryDTO implements Serializable {
             "id=" + getId() +
             ", hours=" + getHours() +
             ", date='" + getDate() + "'" +
+            ", comment='" + getComment() + "'" +
             ", worksheet=" + getWorksheet() +
             ", project=" + getProject() +
             ", entryType=" + getEntryType() +
+            ", worklocation=" + getWorklocation() +
             "}";
     }
 }

@@ -2,7 +2,9 @@ package com.contexity.whh.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -26,7 +28,10 @@ public class Entry implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private Instant date;
+    private LocalDate date;
+
+    @Column(name = "comment")
+    private String comment;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "user", "entries" }, allowSetters = true)
@@ -39,6 +44,14 @@ public class Entry implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "entries" }, allowSetters = true)
     private EntryType entryType;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "entries" }, allowSetters = true)
+    private Worklocation worklocation;
+
+    @ManyToMany(mappedBy = "entries")
+    @JsonIgnoreProperties(value = { "entries" }, allowSetters = true)
+    private Set<Tags> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -68,17 +81,30 @@ public class Entry implements Serializable {
         this.hours = hours;
     }
 
-    public Instant getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public Entry date(Instant date) {
+    public Entry date(LocalDate date) {
         this.setDate(date);
         return this;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public Entry comment(String comment) {
+        this.setComment(comment);
+        return this;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Worksheet getWorksheet() {
@@ -120,6 +146,50 @@ public class Entry implements Serializable {
         return this;
     }
 
+    public Worklocation getWorklocation() {
+        return this.worklocation;
+    }
+
+    public void setWorklocation(Worklocation worklocation) {
+        this.worklocation = worklocation;
+    }
+
+    public Entry worklocation(Worklocation worklocation) {
+        this.setWorklocation(worklocation);
+        return this;
+    }
+
+    public Set<Tags> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tags> tags) {
+        if (this.tags != null) {
+            this.tags.forEach(i -> i.removeEntry(this));
+        }
+        if (tags != null) {
+            tags.forEach(i -> i.addEntry(this));
+        }
+        this.tags = tags;
+    }
+
+    public Entry tags(Set<Tags> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public Entry addTags(Tags tags) {
+        this.tags.add(tags);
+        tags.getEntries().add(this);
+        return this;
+    }
+
+    public Entry removeTags(Tags tags) {
+        this.tags.remove(tags);
+        tags.getEntries().remove(this);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -146,6 +216,7 @@ public class Entry implements Serializable {
             "id=" + getId() +
             ", hours=" + getHours() +
             ", date='" + getDate() + "'" +
+            ", comment='" + getComment() + "'" +
             "}";
     }
 }

@@ -1,11 +1,11 @@
-id;name;worktime
-1;services Brand maroon;true
-2;digital Rustic mesh;false
-3;Savings Reactive;false
-4;Ergonomic Rubber Chips;true
-5;Incredible HDD implementation;false
-6;Stand-alone Balanced;false
-7;Concrete generation Sausages;true
-8;Triple-buffered website;true
-9;SQL;true
-10;green website;true
+id;name;worktime;billable
+1;services Brand maroon;true;true
+2;cyan Frozen Samoa;false;true
+3;white;false;false
+4;Ergonomic Rubber Chips;true;true
+5;info-mediaries;false;true
+6;Croatian Computers;false;true
+7;Balanced fuchsia Dynamic;true;false
+8;Cookinseln;false;true
+9;Triple-buffered website;true;false
+10;cohesive reinvent Hamburg;false;true

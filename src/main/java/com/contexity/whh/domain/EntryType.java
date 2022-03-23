@@ -29,8 +29,11 @@ public class EntryType implements Serializable {
     @Column(name = "worktime", nullable = false)
     private Boolean worktime;
 
+    @Column(name = "billable")
+    private Boolean billable;
+
     @OneToMany(mappedBy = "entryType")
-    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType", "worklocation", "tags" }, allowSetters = true)
     private Set<Entry> entries = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -72,6 +75,19 @@ public class EntryType implements Serializable {
 
     public void setWorktime(Boolean worktime) {
         this.worktime = worktime;
+    }
+
+    public Boolean getBillable() {
+        return this.billable;
+    }
+
+    public EntryType billable(Boolean billable) {
+        this.setBillable(billable);
+        return this;
+    }
+
+    public void setBillable(Boolean billable) {
+        this.billable = billable;
     }
 
     public Set<Entry> getEntries() {
@@ -131,6 +147,7 @@ public class EntryType implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", worktime='" + getWorktime() + "'" +
+            ", billable='" + getBillable() + "'" +
             "}";
     }
 }

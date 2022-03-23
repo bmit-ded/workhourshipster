@@ -32,13 +32,19 @@ export const EntryDetail = (props: RouteComponentProps<{ id: string }>) => {
           <dt>
             <span id="date">Date</span>
           </dt>
-          <dd>{entryEntity.date ? <TextFormat value={entryEntity.date} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{entryEntity.date ? <TextFormat value={entryEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
+          <dt>
+            <span id="comment">Comment</span>
+          </dt>
+          <dd>{entryEntity.comment}</dd>
           <dt>Worksheet</dt>
           <dd>{entryEntity.worksheet ? entryEntity.worksheet.id : ''}</dd>
           <dt>Project</dt>
           <dd>{entryEntity.project ? entryEntity.project.name : ''}</dd>
           <dt>Entry Type</dt>
           <dd>{entryEntity.entryType ? entryEntity.entryType.name : ''}</dd>
+          <dt>Worklocation</dt>
+          <dd>{entryEntity.worklocation ? entryEntity.worklocation.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/entry" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -10,6 +10,10 @@ import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
 import { IEntryType } from 'app/shared/model/entry-type.model';
 import { getEntities as getEntryTypes } from 'app/entities/entry-type/entry-type.reducer';
+import { IWorklocation } from 'app/shared/model/worklocation.model';
+import { getEntities as getWorklocations } from 'app/entities/worklocation/worklocation.reducer';
+import { ITags } from 'app/shared/model/tags.model';
+import { getEntities as getTags } from 'app/entities/tags/tags.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './entry.reducer';
 import { IEntry } from 'app/shared/model/entry.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -24,6 +28,8 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const worksheets = useAppSelector(state => state.worksheet.entities);
   const projects = useAppSelector(state => state.project.entities);
   const entryTypes = useAppSelector(state => state.entryType.entities);
+  const worklocations = useAppSelector(state => state.worklocation.entities);
+  const tags = useAppSelector(state => state.tags.entities);
   const entryEntity = useAppSelector(state => state.entry.entity);
   const loading = useAppSelector(state => state.entry.loading);
   const updating = useAppSelector(state => state.entry.updating);
@@ -42,6 +48,8 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
     dispatch(getWorksheets({}));
     dispatch(getProjects({}));
     dispatch(getEntryTypes({}));
+    dispatch(getWorklocations({}));
+    dispatch(getTags({}));
   }, []);
 
   useEffect(() => {
@@ -51,14 +59,13 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.date = convertDateTimeToServer(values.date);
-
     const entity = {
       ...entryEntity,
       ...values,
       worksheet: worksheets.find(it => it.id.toString() === values.worksheet.toString()),
       project: projects.find(it => it.id.toString() === values.project.toString()),
       entryType: entryTypes.find(it => it.id.toString() === values.entryType.toString()),
+      worklocation: worklocations.find(it => it.id.toString() === values.worklocation.toString()),
     };
 
     if (isNew) {
@@ -70,15 +77,13 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          date: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...entryEntity,
-          date: convertDateTimeFromServer(entryEntity.date),
           worksheet: entryEntity?.worksheet?.id,
           project: entryEntity?.project?.id,
           entryType: entryEntity?.entryType?.id,
+          worklocation: entryEntity?.worklocation?.id,
         };
 
   return (
@@ -113,12 +118,12 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 id="entry-date"
                 name="date"
                 data-cy="date"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
+                type="date"
                 validate={{
                   required: { value: true, message: 'This field is required.' },
                 }}
               />
+              <ValidatedField label="Comment" id="entry-comment" name="comment" data-cy="comment" type="text" />
               <ValidatedField id="entry-worksheet" name="worksheet" data-cy="worksheet" label="Worksheet" type="select">
                 <option value="" key="0" />
                 {worksheets
@@ -143,6 +148,16 @@ export const EntryUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 <option value="" key="0" />
                 {entryTypes
                   ? entryTypes.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="entry-worklocation" name="worklocation" data-cy="worklocation" label="Worklocation" type="select">
+                <option value="" key="0" />
+                {worklocations
+                  ? worklocations.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.name}
                       </option>

@@ -47,6 +47,7 @@ export const EntryType = (props: RouteComponentProps<{ url: string }>) => {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Worktime</th>
+                <th>Billable</th>
                 <th />
               </tr>
             </thead>
@@ -60,6 +61,7 @@ export const EntryType = (props: RouteComponentProps<{ url: string }>) => {
                   </td>
                   <td>{entryType.name}</td>
                   <td>{entryType.worktime ? 'true' : 'false'}</td>
+                  <td>{entryType.billable ? 'true' : 'false'}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${entryType.id}`} color="info" size="sm" data-cy="entityDetailsButton">

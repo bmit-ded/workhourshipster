@@ -1,0 +1,69 @@
+entity Worksheet {
+
+}
+
+entity Entry {
+	hours Double required
+    date LocalDate required
+    comment String
+}
+
+entity Tags{
+  name String required
+}
+
+// entity Bill{
+  //date Instant required
+  //amount Integer required
+  //paid Boolean required
+  //payday Instant
+//}
+
+entity Project {
+	name String required
+}
+
+entity EntryType{
+	name String required
+    worktime Boolean required
+    billable Boolean
+}
+
+entity Customer{
+	name String required
+    adress String
+    phone Integer
+    email String
+}
+
+entity Worklocation{
+	name String
+}
+
+//entity Events{
+  //name String required
+  //startdate LocalDate required
+  //enddate LocalDate required
+  //worktime Boolean required
+//}
+
+relationship OneToOne {
+	 Worksheet{user(login)} to User
+}
+
+relationship OneToMany {
+	Worksheet to Entry{worksheet}
+    Project to Entry{project(name)}
+    EntryType to Entry{entryType(name)}
+    Customer to Project{Customer(name)}
+    Worklocation to Entry{Worklocation(name)}
+   // Customer to Bill{Customer(name)}    
+}
+
+relationship ManyToMany{
+	Tags{Entry} to Entry{Tags(name)}
+}
+
+dto * with mapstruct
+service all with serviceImpl
+

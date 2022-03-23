@@ -37,6 +37,9 @@ class EntryTypeResourceIT {
     private static final Boolean DEFAULT_WORKTIME = false;
     private static final Boolean UPDATED_WORKTIME = true;
 
+    private static final Boolean DEFAULT_BILLABLE = false;
+    private static final Boolean UPDATED_BILLABLE = true;
+
     private static final String ENTITY_API_URL = "/api/entry-types";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -64,7 +67,7 @@ class EntryTypeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static EntryType createEntity(EntityManager em) {
-        EntryType entryType = new EntryType().name(DEFAULT_NAME).worktime(DEFAULT_WORKTIME);
+        EntryType entryType = new EntryType().name(DEFAULT_NAME).worktime(DEFAULT_WORKTIME).billable(DEFAULT_BILLABLE);
         return entryType;
     }
 
@@ -75,7 +78,7 @@ class EntryTypeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static EntryType createUpdatedEntity(EntityManager em) {
-        EntryType entryType = new EntryType().name(UPDATED_NAME).worktime(UPDATED_WORKTIME);
+        EntryType entryType = new EntryType().name(UPDATED_NAME).worktime(UPDATED_WORKTIME).billable(UPDATED_BILLABLE);
         return entryType;
     }
 
@@ -100,6 +103,7 @@ class EntryTypeResourceIT {
         EntryType testEntryType = entryTypeList.get(entryTypeList.size() - 1);
         assertThat(testEntryType.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testEntryType.getWorktime()).isEqualTo(DEFAULT_WORKTIME);
+        assertThat(testEntryType.getBillable()).isEqualTo(DEFAULT_BILLABLE);
     }
 
     @Test
@@ -170,7 +174,8 @@ class EntryTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(entryType.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].worktime").value(hasItem(DEFAULT_WORKTIME.booleanValue())));
+            .andExpect(jsonPath("$.[*].worktime").value(hasItem(DEFAULT_WORKTIME.booleanValue())))
+            .andExpect(jsonPath("$.[*].billable").value(hasItem(DEFAULT_BILLABLE.booleanValue())));
     }
 
     @Test
@@ -186,7 +191,8 @@ class EntryTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(entryType.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.worktime").value(DEFAULT_WORKTIME.booleanValue()));
+            .andExpect(jsonPath("$.worktime").value(DEFAULT_WORKTIME.booleanValue()))
+            .andExpect(jsonPath("$.billable").value(DEFAULT_BILLABLE.booleanValue()));
     }
 
     @Test
@@ -208,7 +214,7 @@ class EntryTypeResourceIT {
         EntryType updatedEntryType = entryTypeRepository.findById(entryType.getId()).get();
         // Disconnect from session so that the updates on updatedEntryType are not directly saved in db
         em.detach(updatedEntryType);
-        updatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME);
+        updatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME).billable(UPDATED_BILLABLE);
         EntryTypeDTO entryTypeDTO = entryTypeMapper.toDto(updatedEntryType);
 
         restEntryTypeMockMvc
@@ -225,6 +231,7 @@ class EntryTypeResourceIT {
         EntryType testEntryType = entryTypeList.get(entryTypeList.size() - 1);
         assertThat(testEntryType.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEntryType.getWorktime()).isEqualTo(UPDATED_WORKTIME);
+        assertThat(testEntryType.getBillable()).isEqualTo(UPDATED_BILLABLE);
     }
 
     @Test
@@ -304,7 +311,7 @@ class EntryTypeResourceIT {
         EntryType partialUpdatedEntryType = new EntryType();
         partialUpdatedEntryType.setId(entryType.getId());
 
-        partialUpdatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME);
+        partialUpdatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME).billable(UPDATED_BILLABLE);
 
         restEntryTypeMockMvc
             .perform(
@@ -320,6 +327,7 @@ class EntryTypeResourceIT {
         EntryType testEntryType = entryTypeList.get(entryTypeList.size() - 1);
         assertThat(testEntryType.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEntryType.getWorktime()).isEqualTo(UPDATED_WORKTIME);
+        assertThat(testEntryType.getBillable()).isEqualTo(UPDATED_BILLABLE);
     }
 
     @Test
@@ -334,7 +342,7 @@ class EntryTypeResourceIT {
         EntryType partialUpdatedEntryType = new EntryType();
         partialUpdatedEntryType.setId(entryType.getId());
 
-        partialUpdatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME);
+        partialUpdatedEntryType.name(UPDATED_NAME).worktime(UPDATED_WORKTIME).billable(UPDATED_BILLABLE);
 
         restEntryTypeMockMvc
             .perform(
@@ -350,6 +358,7 @@ class EntryTypeResourceIT {
         EntryType testEntryType = entryTypeList.get(entryTypeList.size() - 1);
         assertThat(testEntryType.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testEntryType.getWorktime()).isEqualTo(UPDATED_WORKTIME);
+        assertThat(testEntryType.getBillable()).isEqualTo(UPDATED_BILLABLE);
     }
 
     @Test

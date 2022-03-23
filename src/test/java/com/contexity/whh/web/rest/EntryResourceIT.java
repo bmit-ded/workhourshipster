@@ -10,8 +10,8 @@ import com.contexity.whh.domain.Entry;
 import com.contexity.whh.repository.EntryRepository;
 import com.contexity.whh.service.dto.EntryDTO;
 import com.contexity.whh.service.mapper.EntryMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -36,8 +36,11 @@ class EntryResourceIT {
     private static final Double DEFAULT_HOURS = 1D;
     private static final Double UPDATED_HOURS = 2D;
 
-    private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/entries";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -66,7 +69,7 @@ class EntryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Entry createEntity(EntityManager em) {
-        Entry entry = new Entry().hours(DEFAULT_HOURS).date(DEFAULT_DATE);
+        Entry entry = new Entry().hours(DEFAULT_HOURS).date(DEFAULT_DATE).comment(DEFAULT_COMMENT);
         return entry;
     }
 
@@ -77,7 +80,7 @@ class EntryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Entry createUpdatedEntity(EntityManager em) {
-        Entry entry = new Entry().hours(UPDATED_HOURS).date(UPDATED_DATE);
+        Entry entry = new Entry().hours(UPDATED_HOURS).date(UPDATED_DATE).comment(UPDATED_COMMENT);
         return entry;
     }
 
@@ -102,6 +105,7 @@ class EntryResourceIT {
         Entry testEntry = entryList.get(entryList.size() - 1);
         assertThat(testEntry.getHours()).isEqualTo(DEFAULT_HOURS);
         assertThat(testEntry.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testEntry.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test
@@ -172,7 +176,8 @@ class EntryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(entry.getId().intValue())))
             .andExpect(jsonPath("$.[*].hours").value(hasItem(DEFAULT_HOURS.doubleValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)));
     }
 
     @Test
@@ -188,7 +193,8 @@ class EntryResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(entry.getId().intValue()))
             .andExpect(jsonPath("$.hours").value(DEFAULT_HOURS.doubleValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT));
     }
 
     @Test
@@ -210,7 +216,7 @@ class EntryResourceIT {
         Entry updatedEntry = entryRepository.findById(entry.getId()).get();
         // Disconnect from session so that the updates on updatedEntry are not directly saved in db
         em.detach(updatedEntry);
-        updatedEntry.hours(UPDATED_HOURS).date(UPDATED_DATE);
+        updatedEntry.hours(UPDATED_HOURS).date(UPDATED_DATE).comment(UPDATED_COMMENT);
         EntryDTO entryDTO = entryMapper.toDto(updatedEntry);
 
         restEntryMockMvc
@@ -227,6 +233,7 @@ class EntryResourceIT {
         Entry testEntry = entryList.get(entryList.size() - 1);
         assertThat(testEntry.getHours()).isEqualTo(UPDATED_HOURS);
         assertThat(testEntry.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testEntry.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 
     @Test
@@ -322,6 +329,7 @@ class EntryResourceIT {
         Entry testEntry = entryList.get(entryList.size() - 1);
         assertThat(testEntry.getHours()).isEqualTo(UPDATED_HOURS);
         assertThat(testEntry.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testEntry.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test
@@ -336,7 +344,7 @@ class EntryResourceIT {
         Entry partialUpdatedEntry = new Entry();
         partialUpdatedEntry.setId(entry.getId());
 
-        partialUpdatedEntry.hours(UPDATED_HOURS).date(UPDATED_DATE);
+        partialUpdatedEntry.hours(UPDATED_HOURS).date(UPDATED_DATE).comment(UPDATED_COMMENT);
 
         restEntryMockMvc
             .perform(
@@ -352,6 +360,7 @@ class EntryResourceIT {
         Entry testEntry = entryList.get(entryList.size() - 1);
         assertThat(testEntry.getHours()).isEqualTo(UPDATED_HOURS);
         assertThat(testEntry.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testEntry.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 
     @Test

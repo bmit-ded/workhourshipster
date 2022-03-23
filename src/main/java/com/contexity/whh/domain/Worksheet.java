@@ -25,7 +25,7 @@ public class Worksheet implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "worksheet")
-    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "worksheet", "project", "entryType", "worklocation", "tags" }, allowSetters = true)
     private Set<Entry> entries = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

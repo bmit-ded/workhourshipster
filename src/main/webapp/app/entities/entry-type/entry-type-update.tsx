@@ -84,6 +84,7 @@ export const EntryTypeUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 }}
               />
               <ValidatedField label="Worktime" id="entry-type-worktime" name="worktime" data-cy="worktime" check type="checkbox" />
+              <ValidatedField label="Billable" id="entry-type-billable" name="billable" data-cy="billable" check type="checkbox" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/entry-type" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

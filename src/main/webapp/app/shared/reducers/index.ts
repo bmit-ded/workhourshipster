@@ -20,6 +20,10 @@ import project from 'app/entities/project/project.reducer';
 import entryType from 'app/entities/entry-type/entry-type.reducer';
 // prettier-ignore
 import customer from 'app/entities/customer/customer.reducer';
+// prettier-ignore
+import tags from 'app/entities/tags/tags.reducer';
+// prettier-ignore
+import worklocation from 'app/entities/worklocation/worklocation.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const rootReducer = {
@@ -37,6 +41,8 @@ const rootReducer = {
   project,
   entryType,
   customer,
+  tags,
+  worklocation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 };

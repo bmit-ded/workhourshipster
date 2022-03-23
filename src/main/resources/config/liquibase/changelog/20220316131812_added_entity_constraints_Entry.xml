@@ -25,5 +25,11 @@
                                  constraintName="fk_entry__entry_type_id"
                                  referencedColumnNames="id"
                                  referencedTableName="entry_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="worklocation_id"
+                                 baseTableName="entry"
+                                 constraintName="fk_entry__worklocation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="worklocation"/>
     </changeSet>
 </databaseChangeLog>

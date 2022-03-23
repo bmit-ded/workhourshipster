@@ -33,6 +33,10 @@ export const EntryTypeDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="worktime">Worktime</span>
           </dt>
           <dd>{entryTypeEntity.worktime ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="billable">Billable</span>
+          </dt>
+          <dd>{entryTypeEntity.billable ? 'true' : 'false'}</dd>
         </dl>
         <Button tag={Link} to="/entry-type" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
