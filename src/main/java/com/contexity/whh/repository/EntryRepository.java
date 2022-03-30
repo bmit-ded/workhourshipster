@@ -1,6 +1,7 @@
 package com.contexity.whh.repository;
 
 import com.contexity.whh.domain.Entry;
+import com.contexity.whh.service.dto.EntryDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -41,4 +42,9 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
         "select entry from Entry entry left join fetch entry.project left join fetch entry.entryType left join fetch entry.worklocation where entry.id =:id"
     )
     Optional<Entry> findOneWithToOneRelationships(@Param("id") Long id);
+
+    //myWork
+
+    @Query("select entry from Entry entry where project.id = :id")
+    List<Entry> findbyProject(@Param("id") Long id);
 }

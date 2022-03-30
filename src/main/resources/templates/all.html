@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:if="${entries.empty}">
+      <td colspan="2">No Books Available</td>
+    </tr>
+    <tr th:each="entry : ${entries}">
+      <td><span th:text="${entry.id}"> id </span></td>
+      <td><span th:text="${entry.project}"> Author </span></td>
+      <td><span th:text="${entry.comment}"> comment </span></td>
+    </tr>
+  </tbody>
+</table>

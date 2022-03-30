@@ -1,5 +1,6 @@
 package com.contexity.whh.service;
 
+import com.contexity.whh.domain.Entry;
 import com.contexity.whh.service.dto.ProjectDTO;
 import java.util.List;
 import java.util.Optional;

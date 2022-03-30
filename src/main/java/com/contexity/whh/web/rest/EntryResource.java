@@ -1,5 +1,6 @@
 package com.contexity.whh.web.rest;
 
+import com.contexity.whh.domain.Entry;
 import com.contexity.whh.repository.EntryRepository;
 import com.contexity.whh.service.EntryService;
 import com.contexity.whh.service.dto.EntryDTO;
@@ -171,5 +172,20 @@ public class EntryResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    //my work
+
+    public List<Entry> findAllEntriesforProject(Long id) {
+        List<Entry> entryList = entryRepository.findbyProject(id.longValue());
+        return entryList;
+    }
+
+    public double calculateHours(List<Entry> entryList) {
+        double hours = 0;
+        for (Entry entry : entryList) {
+            hours = hours + entry.getHours();
+        }
+        return hours;
     }
 }
