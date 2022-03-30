@@ -7,6 +7,9 @@ import com.contexity.whh.service.dto.EntryDTO;
 import com.contexity.whh.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -177,7 +180,19 @@ public class EntryResource {
     //my work
 
     public List<Entry> findAllEntriesforProject(Long id) {
-        List<Entry> entryList = entryRepository.findbyProject(id.longValue());
+        List<Entry> entryList = entryRepository.findbyProject(id);
+        return entryList;
+    }
+
+    public List<Entry> findDatedEntriesforProject(Long id, int month, int year) {
+        List<Entry> entryList = entryRepository.findbyProjectandDate(id, month, year);
+
+        return entryList;
+    }
+
+    public List<Entry> findWeeklyEntriesforProject(Long id, LocalDate date1, LocalDate date2) {
+        List<Entry> entryList = entryRepository.findbyProjectandDateWeek(id, date1, date2);
+
         return entryList;
     }
 

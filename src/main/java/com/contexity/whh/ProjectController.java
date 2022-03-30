@@ -8,6 +8,7 @@ import com.contexity.whh.service.ProjectService;
 import com.contexity.whh.service.dto.EntryDTO;
 import com.contexity.whh.service.dto.ProjectDTO;
 import com.contexity.whh.web.rest.EntryResource;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,13 @@ public class ProjectController {
 
     @RequestMapping("/stats/projects/{id}")
     public String get(@PathVariable Integer id, Model model) {
+        LocalDate currentdate = LocalDate.now();
+        int month = currentdate.getMonth().getValue();
+        int year = currentdate.getYear();
         long idl = id.longValue();
-        double hours = 0;
+        double hours, hours2, hours3 = 0;
+        LocalDate weekBefore = currentdate.minusDays(7);
+
         Optional<ProjectDTO> projectDTO = projectService.findOne(idl);
         model.addAttribute("project", projectDTO.get());
 
@@ -53,6 +59,13 @@ public class ProjectController {
         hours = entryResource.calculateHours(entryList);
         model.addAttribute("hours", hours);
 
+        List<Entry> entryDateList = entryResource.findDatedEntriesforProject(idl, month, year);
+        hours2 = entryResource.calculateHours(entryDateList);
+        model.addAttribute("hours2", hours2);
+
+        List<Entry> entryWeekList = entryResource.findWeeklyEntriesforProject(idl, weekBefore, currentdate);
+        hours3 = entryResource.calculateHours(entryWeekList);
+        model.addAttribute("hours3", hours3);
         return "projects";
     }
 
