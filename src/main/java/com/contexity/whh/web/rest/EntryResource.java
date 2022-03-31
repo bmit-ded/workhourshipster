@@ -196,6 +196,23 @@ public class EntryResource {
         return entryList;
     }
 
+    public List<Entry> findAllEntriesforWorksheet(Long id) {
+        List<Entry> entryList = entryRepository.findbyWorksheet(id);
+        return entryList;
+    }
+
+    public List<Entry> findDatedEntriesforWorksheet(Long id, int month, int year) {
+        List<Entry> entryList = entryRepository.findbyWorksheetandDate(id, month, year);
+
+        return entryList;
+    }
+
+    public List<Entry> findWeeklyEntriesforWorksheet(Long id, LocalDate date1, LocalDate date2) {
+        List<Entry> entryList = entryRepository.findbyWorksheetandDateWeek(id, date1, date2);
+
+        return entryList;
+    }
+
     public double calculateHours(List<Entry> entryList) {
         double hours = 0;
         for (Entry entry : entryList) {

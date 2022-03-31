@@ -56,4 +56,13 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
 
     @Query("select entry from Entry entry where project.id = :id and entry.date between :date1 and :date2")
     List<Entry> findbyProjectandDateWeek(@Param("id") Long id, @Param("date1") LocalDate date1, @Param("date2") LocalDate date2);
+
+    @Query("select entry from Entry entry where worksheet.id = :id")
+    List<Entry> findbyWorksheet(@Param("id") Long id);
+
+    @Query("select entry from Entry entry where worksheet.id = :id and MONTH(entry.date) = :month and YEAR(entry.date) = :year")
+    List<Entry> findbyWorksheetandDate(@Param("id") Long id, @Param("month") int month, @Param("year") int year);
+
+    @Query("select entry from Entry entry where worksheet.id = :id and entry.date between :date1 and :date2")
+    List<Entry> findbyWorksheetandDateWeek(@Param("id") Long id, @Param("date1") LocalDate date1, @Param("date2") LocalDate date2);
 }
